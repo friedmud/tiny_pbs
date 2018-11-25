@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for
+    Blueprint, flash, g, redirect, render_template, request, url_for, jsonify
 )
 from werkzeug.exceptions import abort
 
@@ -17,4 +17,6 @@ def qsub():
 
 @bp.route('/qstat')
 def login():
-    return 'qstat stuff'
+    db = get_db()
+    jobs = db.execute('select name, command, submitted, started, finished from job').fetchall()
+    return jsonify([tuple(row) for row in jobs])
