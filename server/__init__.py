@@ -41,4 +41,7 @@ def create_app(test_config=None):
     from . import job_manager
     app.register_blueprint(job_manager.bp)
 
+    from . import view_jobs
+    app.register_blueprint(view_jobs.bp)
+
     return app

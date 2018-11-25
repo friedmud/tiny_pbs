@@ -12,6 +12,7 @@ def qsub():
     db = get_db()
     qsub_data = request.get_json()
     db.execute('insert into job (name, command) values (?, ?)', (qsub_data['name'], qsub_data['command']))
+    db.commit()
     return "OK"
 
 @bp.route('/qstat')
