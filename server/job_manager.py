@@ -7,9 +7,12 @@ from server.db import get_db
 
 bp = Blueprint('job_manager', __name__)
 
-@bp.route("/qsub")
+@bp.route("/qsub", methods=['POST'])
 def qsub():
-    return "subbing!"
+    db = get_db()
+    qsub_data = request.get_json()
+    db.execute('insert into job (name, command) values (?, ?)', (qsub_data['name'], qsub_data['command']))
+    return "OK"
 
 @bp.route('/qstat')
 def login():
